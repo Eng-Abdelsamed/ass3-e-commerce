@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import "../Styles/globals.css";
+import "../styles/globals.css";
 import Navbar from "../components/shared/navbar";
 import Footer from "../components/shared/footer";
 import ProviderStore from "@/components/providers/ProviderStore";
