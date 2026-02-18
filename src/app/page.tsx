@@ -1,9 +1,9 @@
-import React from 'react'
+import HomeScreen from '@/features/home/screens/home.screen'
 
 export default function Home() {
     return (
         <>
-            <h2>home page</h2>
+           <HomeScreen/>
         </>
     )
 }

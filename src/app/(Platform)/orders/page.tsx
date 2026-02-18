@@ -1,9 +1,8 @@
-import React from 'react'
-
+import OrdersScreen from '@/features/orders/screens/orders.screen'
 export default function OrderPage() {
   return (
     <>
-        <h2>OrderPage</h2>
+        <OrdersScreen/>
     </>
   )
 }

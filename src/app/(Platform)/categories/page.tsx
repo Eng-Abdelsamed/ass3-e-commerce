@@ -1,9 +1,9 @@
-import React from 'react'
+import CategoryScreen from "@/features/categories/screens/category.screen";
 
 export default function CategoriesPage() {
   return (
     <>
-        <h2>CategoriesPage</h2>
+        <CategoryScreen/>
     </>
   )
 }

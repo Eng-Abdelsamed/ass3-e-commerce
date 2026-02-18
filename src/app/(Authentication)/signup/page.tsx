@@ -1,10 +1,9 @@
-import SignupScreen from '@/src/features/auth/views/signup.screen'
-import React from 'react'
+import SignupScreen from '@/features/auth/views/Signup.screen'
 
 export default function SignupPage() {
   return (
     <>
-      <SignupScreen />
+      <SignupScreen/>
     </>
   )
 }

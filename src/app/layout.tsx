@@ -1,16 +1,109 @@
-import { ReactNode } from "react"
-import "../Styles/globals.css"
-import Navbar from "../components/shared/navbar"
-import Footer from "../components/shared/footer"
+import { ReactNode } from "react";
+import "../Styles/globals.css";
+import Navbar from "../components/shared/navbar";
+import Footer from "../components/shared/footer";
+import ProviderStore from "@/components/providers/ProviderStore";
+import { verifyToken } from "@/features/auth/server/auth.actions";
+import "@fortawesome/fontawesome-svg-core/styles";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
+import { Exo } from "next/font/google";
+import { getLoggedUserCart } from "@/features/cart/server/cart.actions";
+import { CartState } from "@/features/cart/store/cart.slice";
+import { getAllCategories } from "@/features/categories/server/category.actions";
+import { getLoggedUserWishlist } from "@/features/wishlist/server/wishlist.actions";
 
-export default function Layout({ children }: { children: ReactNode }) {
-    return (
-        <html>
-            <body>
-                <Navbar />
-                {children}
-                <Footer />
-            </body>
-        </html>
-    )
+const exo = Exo({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-exo",
+});
+
+let defaultCartState: CartState = {
+  numOfCartItems: 0,
+  cartId: null,
+  products: [],
+  totalCartPrice: 0,
+  isLoading: false,
+  error: null,
+};
+
+export const metadata = {
+  title: "FreshCart",
+  description: "Fresh Cart",
+  icons: {
+    icon: "/mini-logo.png",
+  },
+};
+
+export default async function Layout({ children }: { children: ReactNode }) {
+  let cartState = defaultCartState;
+  const authValues = await verifyToken();
+  const categoriesResponse = await getAllCategories();
+  const categories = categoriesResponse.data;
+
+  let wishlistState = {
+    wishlistIds: [] as string[],
+    products: [] as any[],
+    isLoading: false,
+    error: null as string | null,
+  };
+
+  if (authValues.isAuthenticated) {
+    try {
+      const cartResponse = await getLoggedUserCart();
+      cartState = {
+        numOfCartItems: cartResponse.numOfCartItems,
+        cartId: cartResponse.cartId,
+        products: cartResponse.data.products,
+        totalCartPrice: cartResponse.data.totalCartPrice,
+        isLoading: false,
+        error: null,
+      };
+
+      try {
+        const wishlistResponse = await getLoggedUserWishlist();
+        wishlistState = {
+          wishlistIds: wishlistResponse.data.map((item: any) => item.id),
+          products: wishlistResponse.data,
+          isLoading: false,
+          error: null,
+        };
+      } catch (error) {
+        console.error("Failed to fetch wishlist", error);
+      }
+    } catch (error) {
+      cartState = defaultCartState;
+    }
+  }
+
+  const preloadedState = {
+    auth: authValues ?? {
+      isAuthenticated: false,
+      userInfo: null,
+    },
+    cart: cartState,
+    wishlist: wishlistState,
+    brand: {
+      brands: [],
+      isLoading: false,
+      error: null,
+    },
+  };
+
+  return (
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${exo.className} font-medium`}
+    >
+      <body>
+        <ProviderStore preloadedState={preloadedState}>
+          <Navbar categories={categories} />
+          {children}
+          <Footer />
+        </ProviderStore>
+      </body>
+    </html>
+  );
 }

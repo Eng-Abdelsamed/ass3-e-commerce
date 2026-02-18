@@ -1,9 +1,9 @@
-import React from 'react'
+import WishlistScreen from "@/features/wishlist/screens/wishlist.screen";
 
 export default function WishListPage() {
   return (
     <>
-        <h2>wishlist</h2>
+      <WishlistScreen />
     </>
   )
 }
