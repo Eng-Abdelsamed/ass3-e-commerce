@@ -17,6 +17,7 @@ import {
   faSprayCanSparkles,
   faLaptop,
   faXmark,
+  faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
@@ -354,7 +355,7 @@ export default function Navbar({ categories }: { categories: Category[] }) {
           {/* Account Section */}
           <div className="space-y-4 pt-4 border-t border-gray-100">
             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider px-2">
-              Offers & Categories
+              Brands & Orders
             </h3>
             <nav className="space-y-1">
               
@@ -369,6 +370,21 @@ export default function Navbar({ categories }: { categories: Category[] }) {
                 />
                 <span>Brands</span>
               </Link>
+
+              <Link
+                href="/orders"
+                className="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-green-50 hover:text-green-600 transition-all font-medium"
+                onClick={() => setIsSidebarOpen(false)}
+              >
+                <FontAwesomeIcon
+                  icon={faShoppingBag}
+                  className="w-5 h-5 text-green-500"
+                />
+                <span>Orders</span>
+              </Link>
+
+
+
             </nav>
           </div>
           {/* Auth Account Section */}
