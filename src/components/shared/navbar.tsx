@@ -206,6 +206,10 @@ export default function Navbar({ categories }: { categories: Category[] }) {
                 <li className="hover:text-green-500 transition-colors duration-200">
                   <Link href="/">Home</Link>
                 </li>
+
+                <li className=" hover:text-green-500 transition-colors duration-200">
+                  <Link href="/orders" >Orders</Link>
+                </li>
                
                 <li className="hover:text-green-500 transition-colors duration-200">
                   <Link href="/brands">Brands</Link>
