@@ -27,7 +27,7 @@ export default async function OurCategories() {
               <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
             </Link>
           </div>
-          <div className="grid grid-cols-6 md-grid-cols-3 lg-grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {response.data.map((category) => (
               <Link
                 href={`/categories/${category._id}`}
